@@ -17,19 +17,18 @@ import Google from "./google";
 import Github from "./github";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { signup } from "@/actions/auth";
 
-const SignUpCard = () => {
+const SignInCard = () => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   return (
     <Card className="w-[400px] min-w-[300px]">
       <CardHeader>
         <CardTitle className="text-center font-heading2 text-2xl font-bold text-mytext">
-          Sign Up
+          Sign In
         </CardTitle>
         <CardDescription className="text-center font-body text-base font-semibold text-mytextlight">
-          Create Your Account to get Started
+          Welcome back. Please enter your details.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -63,17 +62,7 @@ const SignUpCard = () => {
             </span>
           </div>
         </div>
-        <form action={signup} className="grid w-full items-center gap-4">
-          <div className="flex flex-col space-y-1.5">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              type="text"
-              placeholder="John Doe"
-              name="name"
-              required
-            />
-          </div>
+        <form className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -112,20 +101,20 @@ const SignUpCard = () => {
             className="mt-4 w-full bg-gradient-to-br from-myaccent5 to-myaccent7 font-heading2 text-base font-medium text-white transition-colors duration-300 hover:from-myaccent5 hover:to-myaccent6"
             type="submit"
           >
-            Sign Up
+            Sign In
           </Button>
         </form>
       </CardContent>
       <CardFooter>
         <div className="flex w-full items-center justify-center gap-2">
           <p className="font-body text-sm font-semibold text-mytextlight">
-            Already have an account?
+            Don't have an account?
           </p>
           <Link
-            href="/signin"
+            href="/signup"
             className="font-body text-sm font-semibold text-mytext hover:underline"
           >
-            Sign In
+            Sign Up
           </Link>
         </div>
       </CardFooter>
@@ -133,4 +122,4 @@ const SignUpCard = () => {
   );
 };
 
-export default SignUpCard;
+export default SignInCard;
