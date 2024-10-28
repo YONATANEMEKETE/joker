@@ -1,15 +1,10 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import Nav from "@/components/Nav";
 
 export default function Home() {
   return (
-    <div className="text-blue bg-mybg2 grid h-screen place-content-center">
-      <h1 className="text-mytext font-body text-3xl font-bold">
-        what do you think
-      </h1>
-      <Button className="bg-myaccent5 w-[200px] font-bold text-white">
-        Start
-      </Button>
+    <div className="min-h-screen">
+      <Nav />
+      <main className="min-h-[90vh] bg-mybg2"></main>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Rubik_Wet_Paint, Archivo, Spectral } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const rubikWetPaint = Rubik_Wet_Paint({
   subsets: ["latin"],
@@ -33,7 +34,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Joker: Joke Sharing App",
+  title: "Joker: Share Your Jokes with the World",
   description: "Share your funny moments with the world.",
 };
 
@@ -47,7 +48,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${rubikWetPaint.variable} ${archivo.variable} ${spectral.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
