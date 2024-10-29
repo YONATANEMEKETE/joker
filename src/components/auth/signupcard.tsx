@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useActionState, useState } from "react";
 import {
   Card,
   CardContent,
@@ -18,9 +18,11 @@ import Github from "./github";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { signup } from "@/actions/auth";
+import { useFormState, useFormStatus } from "react-dom";
 
 const SignUpCard = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [state, action] = useFormState(signup, undefined);
 
   return (
     <Card className="w-[400px] min-w-[300px]">
@@ -63,7 +65,7 @@ const SignUpCard = () => {
             </span>
           </div>
         </div>
-        <form action={signup} className="grid w-full items-center gap-4">
+        <form action={action} className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="name">Name</Label>
             <Input
@@ -73,6 +75,11 @@ const SignUpCard = () => {
               name="name"
               required
             />
+            {state?.errors?.name && (
+              <p className="ml-2 font-body text-sm font-semibold text-red-600">
+                {state.errors.name}
+              </p>
+            )}
           </div>
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="email">Email</Label>
@@ -83,6 +90,11 @@ const SignUpCard = () => {
               name="email"
               required
             />
+            {state?.errors?.email && (
+              <p className="ml-2 font-body text-sm font-semibold text-red-600">
+                {state.errors.email}
+              </p>
+            )}
           </div>
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="password">Password</Label>
@@ -107,13 +119,13 @@ const SignUpCard = () => {
                 )}
               </Button>
             </div>
+            {state?.errors?.password && (
+              <p className="ml-2 font-body text-sm font-semibold text-red-600">
+                {state.errors.password}
+              </p>
+            )}
           </div>
-          <Button
-            className="mt-4 w-full bg-gradient-to-br from-myaccent5 to-myaccent7 font-heading2 text-base font-medium text-white transition-colors duration-300 hover:from-myaccent5 hover:to-myaccent6"
-            type="submit"
-          >
-            Sign Up
-          </Button>
+          <FormButton />
         </form>
       </CardContent>
       <CardFooter>
@@ -134,3 +146,17 @@ const SignUpCard = () => {
 };
 
 export default SignUpCard;
+
+const FormButton = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      disabled={pending}
+      className="mt-4 w-full bg-gradient-to-br from-myaccent5 to-myaccent7 font-heading2 text-base font-medium text-white transition-colors duration-300 hover:from-myaccent5 hover:to-myaccent6"
+      type="submit"
+    >
+      Sign Up
+    </Button>
+  );
+};

@@ -18,9 +18,11 @@ import Github from "./github";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { login } from "@/actions/auth";
+import { useFormState } from "react-dom";
 
 const SignInCard = () => {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [state, action] = useFormState(login, undefined);
 
   return (
     <Card className="w-[400px] min-w-[300px]">
@@ -63,7 +65,7 @@ const SignInCard = () => {
             </span>
           </div>
         </div>
-        <form action={login} className="grid w-full items-center gap-4">
+        <form action={action} className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -73,6 +75,11 @@ const SignInCard = () => {
               name="email"
               required
             />
+            {state?.errors?.email && (
+              <p className="ml-2 font-body text-sm font-semibold text-red-600">
+                {state.errors.email}
+              </p>
+            )}
           </div>
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="password">Password</Label>
@@ -97,6 +104,11 @@ const SignInCard = () => {
                 )}
               </Button>
             </div>
+            {state?.errors?.password && (
+              <p className="ml-2 font-body text-sm font-semibold text-red-600">
+                {state.errors.password}
+              </p>
+            )}
           </div>
           <Button
             className="mt-4 w-full bg-gradient-to-br from-myaccent5 to-myaccent7 font-heading2 text-base font-medium text-white transition-colors duration-300 hover:from-myaccent5 hover:to-myaccent6"
