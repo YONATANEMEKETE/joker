@@ -4,18 +4,30 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
+import {
+  FormState,
+  signinFormSchema,
+  SignInState,
+  SignupFormSchema,
+} from "@/lib/definition";
 
-export async function login(formData: FormData) {
+export async function login(state: SignInState, formData: FormData) {
   const supabase = await createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
+  const validatedFields = signinFormSchema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const { error } = await supabase.auth.signInWithPassword(
+    validatedFields.data,
+  );
 
   if (error) {
     redirect("/error");
@@ -25,21 +37,27 @@ export async function login(formData: FormData) {
   redirect("/");
 }
 
-export async function signup(formData: FormData) {
+export async function signup(state: FormState, formData: FormData) {
   const supabase = await createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const name = formData.get("name") as string;
+  const validatedFields = SignupFormSchema.safeParse({
+    name: formData.get("name"),
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
 
   const { error } = await supabase.auth.signUp({
-    email: email,
-    password: password,
+    email: validatedFields.data.email,
+    password: validatedFields.data.password,
     options: {
       data: {
-        username: name,
+        username: validatedFields.data.name,
       },
     },
   });
@@ -50,7 +68,6 @@ export async function signup(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/");
 }
 
 export async function logout() {
