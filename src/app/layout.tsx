@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Rubik_Wet_Paint, Archivo, Spectral } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const rubikWetPaint = Rubik_Wet_Paint({
   subsets: ["latin"],

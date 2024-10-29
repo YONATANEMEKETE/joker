@@ -30,6 +30,7 @@ export async function login(state: SignInState, formData: FormData) {
   );
 
   if (error) {
+    console.log(error);
     redirect("/error");
   }
 
@@ -52,7 +53,7 @@ export async function signup(state: FormState, formData: FormData) {
     };
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { error, data } = await supabase.auth.signUp({
     email: validatedFields.data.email,
     password: validatedFields.data.password,
     options: {
@@ -67,7 +68,12 @@ export async function signup(state: FormState, formData: FormData) {
     redirect("/error");
   }
 
-  revalidatePath("/", "layout");
+  if (data) {
+    revalidatePath("/", "layout");
+    return {
+      message: "Check your email for a verification link",
+    };
+  }
 }
 
 export async function logout() {

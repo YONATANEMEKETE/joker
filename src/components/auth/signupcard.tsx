@@ -126,6 +126,11 @@ const SignUpCard = () => {
             )}
           </div>
           <FormButton />
+          {state?.message && (
+            <p className="text-center font-body text-sm font-semibold text-green-600">
+              {state.message}
+            </p>
+          )}
         </form>
       </CardContent>
       <CardFooter>
@@ -156,7 +161,7 @@ const FormButton = () => {
       className="mt-4 w-full bg-gradient-to-br from-myaccent5 to-myaccent7 font-heading2 text-base font-medium text-white transition-colors duration-300 hover:from-myaccent5 hover:to-myaccent6"
       type="submit"
     >
-      Sign Up
+      {pending ? "Loading..." : "Sign Up"}
     </Button>
   );
 };

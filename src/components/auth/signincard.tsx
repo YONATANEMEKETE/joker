@@ -19,6 +19,7 @@ import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { login } from "@/actions/auth";
 import { useFormState } from "react-dom";
+import { useFormStatus } from "react-dom";
 
 const SignInCard = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -110,12 +111,12 @@ const SignInCard = () => {
               </p>
             )}
           </div>
-          <Button
-            className="mt-4 w-full bg-gradient-to-br from-myaccent5 to-myaccent7 font-heading2 text-base font-medium text-white transition-colors duration-300 hover:from-myaccent5 hover:to-myaccent6"
-            type="submit"
-          >
-            Sign In
-          </Button>
+          <FormButton />
+          {state?.message && (
+            <p className="text-center font-body text-sm font-semibold text-red-600">
+              {state.message}
+            </p>
+          )}
         </form>
       </CardContent>
       <CardFooter>
@@ -136,3 +137,17 @@ const SignInCard = () => {
 };
 
 export default SignInCard;
+
+const FormButton = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      disabled={pending}
+      className="mt-4 w-full bg-gradient-to-br from-myaccent5 to-myaccent7 font-heading2 text-base font-medium text-white transition-colors duration-300 hover:from-myaccent5 hover:to-myaccent6"
+      type="submit"
+    >
+      {pending ? "Loading..." : "Sign In"}
+    </Button>
+  );
+};
