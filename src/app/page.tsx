@@ -16,7 +16,7 @@ export default async function Home() {
     <div className="min-h-screen">
       <Nav />
       <main className="grid min-h-[90vh] place-content-center bg-mybg2">
-        <p>{metadata?.username}</p>
+        <p>{metadata?.username || user?.email}</p>
         <form action={logout}>
           <Button type="submit">Log Out</Button>
         </form>

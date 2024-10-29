@@ -17,7 +17,7 @@ import Google from "./google";
 import Github from "./github";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { signinWithGoogle, signup } from "@/actions/auth";
+import { signinWithGithub, signinWithGoogle, signup } from "@/actions/auth";
 import { useFormState, useFormStatus } from "react-dom";
 
 const SignUpCard = () => {
@@ -45,7 +45,7 @@ const SignUpCard = () => {
               <Google />
             </Button>
           </form>
-          <form className="basis-[48%]">
+          <form action={signinWithGithub} className="basis-[48%]">
             <Button
               variant="outline"
               size={"lg"}
