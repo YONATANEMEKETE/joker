@@ -17,6 +17,7 @@ import Google from "./google";
 import Github from "./github";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+import { login } from "@/actions/auth";
 
 const SignInCard = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -62,7 +63,7 @@ const SignInCard = () => {
             </span>
           </div>
         </div>
-        <form className="grid w-full items-center gap-4">
+        <form action={login} className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="email">Email</Label>
             <Input
