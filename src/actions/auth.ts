@@ -34,7 +34,7 @@ export async function login(state: SignInState, formData: FormData) {
     redirect("/error");
   }
 
-  revalidatePath("/", "layout");
+  revalidatePath("/", "page");
   redirect("/");
 }
 
@@ -69,7 +69,7 @@ export async function signup(state: FormState, formData: FormData) {
   }
 
   if (data) {
-    revalidatePath("/", "layout");
+    revalidatePath("/", "page");
     return {
       message: "Check your email for a verification link",
     };
@@ -81,6 +81,25 @@ export async function logout() {
 
   await supabase.auth.signOut();
 
-  revalidatePath("/", "layout");
+  revalidatePath("/", "page");
   redirect("/");
+}
+
+export async function signinWithGoogle() {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: "http://localhost:3000/auth/callback",
+      queryParams: {
+        access_type: "offline",
+        prompt: "consent",
+      },
+    },
+  });
+
+  if (data.url) {
+    redirect(data.url); // use the redirect API for your server framework
+  }
 }

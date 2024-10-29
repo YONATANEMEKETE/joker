@@ -17,7 +17,7 @@ import Google from "./google";
 import Github from "./github";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { login } from "@/actions/auth";
+import { login, signinWithGoogle } from "@/actions/auth";
 import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
 
@@ -37,7 +37,7 @@ const SignInCard = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center justify-between">
-          <form className="basis-[48%]">
+          <form action={signinWithGoogle} className="basis-[48%]">
             <Button
               variant="outline"
               size={"lg"}
@@ -112,11 +112,6 @@ const SignInCard = () => {
             )}
           </div>
           <FormButton />
-          {state?.message && (
-            <p className="text-center font-body text-sm font-semibold text-red-600">
-              {state.message}
-            </p>
-          )}
         </form>
       </CardContent>
       <CardFooter>
