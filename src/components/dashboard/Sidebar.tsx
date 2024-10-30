@@ -19,7 +19,7 @@ const Sidebar = async () => {
   } = await supabase.auth.getUser();
 
   return (
-    <div className="fixed inset-y-0 left-0 flex w-1/6 min-w-[200px] max-w-[250px] flex-col justify-between border-r bg-mybg2 pb-4 pt-6">
+    <div className="fixed inset-y-0 left-0 flex w-1/6 min-w-[250px] max-w-[250px] flex-col justify-between border-r bg-mybg2 pb-4 pt-6">
       <div className="space-y-6">
         <Link href={"/"} className="cursor-pointer">
           <Image
@@ -63,7 +63,7 @@ const Sidebar = async () => {
               <div className="flex cursor-pointer items-center justify-between rounded-sm p-2">
                 <div className="flex max-w-[80%] items-center gap-x-2">
                   <Avatar>
-                    <AvatarFallback className="rounded-full bg-mybg1 font-heading2 text-base font-semibold text-mytext">
+                    <AvatarFallback className="rounded-full bg-mybg1 font-heading2 text-base font-semibold text-mytext ring-2 ring-mytext ring-offset-4 ring-offset-mybg2">
                       {user?.user_metadata.name.charAt(0)}
                     </AvatarFallback>
                     <AvatarImage src={user?.user_metadata.avatar_url} />
@@ -79,7 +79,11 @@ const Sidebar = async () => {
                 </div>
               </div>
             </PopoverTrigger>
-            <PopoverContent className="max-w-[200px] border p-1">
+            <PopoverContent
+              side="right"
+              asChild
+              className="max-w-[200px] border p-1"
+            >
               <form action={logout} className="w-full">
                 <Button
                   variant={"outline"}
