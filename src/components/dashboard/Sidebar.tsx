@@ -19,7 +19,7 @@ const Sidebar = async () => {
   } = await supabase.auth.getUser();
 
   return (
-    <div className="fixed inset-y-0 left-0 flex w-1/6 min-w-[200px] max-w-[250px] flex-col justify-between border-r bg-mybg2 py-6">
+    <div className="fixed inset-y-0 left-0 flex w-1/6 min-w-[200px] max-w-[250px] flex-col justify-between border-r bg-mybg2 pb-4 pt-6">
       <div className="space-y-6">
         <Link href={"/"} className="cursor-pointer">
           <Image
@@ -55,7 +55,7 @@ const Sidebar = async () => {
         </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4">
         <div className="h-[1px] w-full bg-border"></div>
         <div className="w-full px-2">
           <Popover>
