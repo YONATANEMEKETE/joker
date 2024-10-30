@@ -58,7 +58,7 @@ export async function signup(state: FormState, formData: FormData) {
     password: validatedFields.data.password,
     options: {
       data: {
-        username: validatedFields.data.name,
+        name: validatedFields.data.name,
       },
     },
   });
