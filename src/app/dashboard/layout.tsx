@@ -8,11 +8,11 @@ interface DashboardLayoutProps {
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
-    <div className="flex min-h-screen flex-grow">
+    <div className="flex min-h-screen flex-row items-start">
       <Sidebar />
       <div className="flex-1">
         <DashboardNav />
-        <div className="min-h-[100vh] bg-mybg2">{children}</div>
+        {children}
       </div>
     </div>
   );

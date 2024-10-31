@@ -40,7 +40,8 @@
     --mytext: #141414;
     --mytextlight: #4f4f4f;
     --mytextlighter: #6d6d6d;
-    --mybg1: #ffedeb;
+    /* --mybg1: #ffedeb; */
+    --mybg1: #fcf8f8;
     --mybg2: #ffffff;
   }
   .dark {
