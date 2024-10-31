@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import ThemeToggle from "../theme-toggle";
 import { Button } from "../ui/button";
@@ -11,8 +13,12 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { Textarea } from "../ui/textarea";
+import { createPost } from "@/actions/db";
+import { useFormState, useFormStatus } from "react-dom";
 
 const DashboardNav = () => {
+  const [state, postAction] = useFormState(createPost, undefined);
+
   return (
     <nav className="flex h-16 items-center justify-end gap-x-4 border-b px-12 py-2">
       <ThemeToggle />
@@ -35,17 +41,19 @@ const DashboardNav = () => {
               Let the community laugh 😀 with you
             </DialogDescription>
           </DialogHeader>
-          <form className="mt-10 w-full space-y-5">
+          <form action={postAction} className="mt-10 w-full space-y-5">
             <Textarea
               placeholder="What's on your mind?"
               className="min-h-40 resize-y"
+              name="content"
             />
-            <Button
-              type="submit"
-              className="w-full bg-gradient-to-br from-myaccent5 to-myaccent7 font-heading2 text-base font-medium text-white transition-colors duration-300 hover:from-myaccent5 hover:to-myaccent6"
-            >
-              Post
-            </Button>
+            {state?.errors && (
+              <p className="ml-2 text-red-500">{state.errors.content}</p>
+            )}
+            <PostButton />
+            {state?.message && (
+              <p className="ml-2 text-green-500">{state.message}</p>
+            )}
           </form>
         </DialogContent>
       </Dialog>
@@ -54,3 +62,16 @@ const DashboardNav = () => {
 };
 
 export default DashboardNav;
+
+export const PostButton = () => {
+  const { pending } = useFormStatus();
+  return (
+    <Button
+      disabled={pending}
+      type="submit"
+      className="w-full bg-gradient-to-br from-myaccent5 to-myaccent7 font-heading2 text-base font-medium text-white transition-colors duration-300 hover:from-myaccent5 hover:to-myaccent6"
+    >
+      {pending ? "Loading..." : "Post"}
+    </Button>
+  );
+};

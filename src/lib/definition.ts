@@ -20,6 +20,13 @@ export const signinFormSchema = z.object({
     .trim(),
 });
 
+export const postSchema = z.object({
+  content: z
+    .string()
+    .min(4, { message: "A Post must be at least 4 characters long." })
+    .trim(),
+});
+
 export type SignInState =
   | {
       errors?: {
@@ -36,6 +43,15 @@ export type FormState =
         name?: string[];
         email?: string[];
         password?: string[];
+      };
+      message?: string;
+    }
+  | undefined;
+
+export type PostState =
+  | {
+      errors?: {
+        content?: string[];
       };
       message?: string;
     }
